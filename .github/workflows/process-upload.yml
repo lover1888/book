@@ -1,0 +1,40 @@
+name: Process uploaded EPUB
+
+on:
+  workflow_dispatch:
+    inputs:
+      upload_id:
+        description: Optional upload job ID to investigate
+        required: false
+        type: string
+
+jobs:
+  process-upload:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ROOT: ${{ github.workspace }}
+      GITHUB_TOKEN: ${{ secrets.UPLOAD_GITHUB_TOKEN }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_D1_DATABASE_NAME: reader-db
+      WRANGLER_CONFIG_PATH: ${{ github.workspace }}/wrangler.toml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Process pending uploads and deploy
+        run: npm run process:cloudflare-upload
