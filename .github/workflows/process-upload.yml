@@ -26,7 +26,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+
+      - name: Verify required files
+        run: |
+          test -f package.json
+          test -f package-lock.json
+          test -f wrangler.toml
+          test -f scripts/process-cloudflare-upload.mjs
+          test -f scripts/epub-preprocess/import_epub.py
+          test -f migrations/0001_create_upload_jobs.sql
 
       - name: Setup Python
         uses: actions/setup-python@v5

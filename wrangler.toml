@@ -1,0 +1,17 @@
+name = "reader"
+compatibility_date = "2026-04-20"
+
+[[d1_databases]]
+binding = "READER_DB"
+database_name = "reader-db"
+database_id = "43d1d651-33f2-4704-bc9a-e043431882e3"
+
+[vars]
+GITHUB_REPO_OWNER = "lover1888"
+GITHUB_REPO_NAME = "book"
+GITHUB_RELEASE_TAG = "reader-uploads"
+GITHUB_RELEASE_NAME = "Reader uploads"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"

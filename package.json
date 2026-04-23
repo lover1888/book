@@ -1,0 +1,25 @@
+{
+  "name": "reader",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "local-import": "node ./scripts/local-import-server.mjs",
+    "dev:local": "./scripts/dev-local.sh",
+    "deploy:cloudflare": "./scripts/deploy-cloudflare.sh",
+    "process:cloudflare-upload": "node ./scripts/process-cloudflare-upload.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.1.10",
+    "@astrojs/react": "^5.0.3",
+    "astro": "^6.1.8",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  }
+}
