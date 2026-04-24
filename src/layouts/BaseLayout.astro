@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  pathname?: string;
+}
+
+const { title, description = '像微信读书一样沉浸，但更轻更克制的在线阅读站。', pathname = '/' } = Astro.props;
+
+const navItems = [
+  { href: '/', label: '发现' },
+  { href: '/shelf', label: '本地书架' }
+];
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">阅</span>
+          <span>云上阅读</span>
+        </a>
+        <div class="topbar-actions">
+          <nav class="nav-links" aria-label="主导航">
+            {navItems.map((item) => (
+              <a class="nav-link" href={item.href} aria-current={pathname === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+          <a class="secondary-btn topbar-upload" href="/admin/upload">上传 EPUB</a>
+        </div>
+      </div>
+    </header>
+    <div class="site-shell">
+      <main>
+        <slot />
+        <p class="footer-note">首版以公开阅读体验为先，阅读进度与书架状态仅保存在本地浏览器。</p>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+---
+import type { Book } from '../../lib/books';
+
+export interface Props {
+  book: Book;
+}
+
+const { book } = Astro.props;
+---
+
+<section class="panel" style="display:grid; grid-template-columns: 120px 1fr; gap:18px; align-items:center;">
+  <div class="detail-cover">
+    <img src={book.cover} alt={`${book.title} 封面`} />
+  </div>
+  <div style="display:grid; gap:10px;">
+    <p class="pill" style="width:max-content;">最近续读</p>
+    <h3 style="font-size:1.5rem;">{book.title}</h3>
+    <p class="muted" style="margin:0; line-height:1.7;">{book.intro}</p>
+    <div class="action-row">
+      <a class="primary-btn" href={`/read/${book.id}`}>继续阅读</a>
+      <a class="secondary-btn" href="/shelf">查看书架</a>
+    </div>
+  </div>
+</section>

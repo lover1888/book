@@ -1,0 +1,21 @@
+---
+import type { Book } from '../../lib/books';
+
+export interface Props {
+  book: Book;
+}
+
+const { book } = Astro.props;
+---
+
+<article class="book-card">
+  <a href={`/book/${book.id}`}>
+    <div class="book-cover">
+      <img src={book.cover} alt={`${book.title} 封面`} />
+    </div>
+  </a>
+  <div style="display:grid; gap:4px; margin-top:10px; justify-items:center; text-align:center;">
+    <h3><a href={`/book/${book.id}`}>{book.title}</a></h3>
+    <p class="muted" style="margin:0;">{book.author}</p>
+  </div>
+</article>

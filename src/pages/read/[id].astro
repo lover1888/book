@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReaderClient from '../../components/reader/ReaderClient';
+import { getBook } from '../../lib/books';
+
+const book = await getBook(Astro.params.id ?? '');
+if (!book) {
+  return Astro.redirect('/');
+}
+
+const chapterId = Astro.url.searchParams.get('chapter') ?? book.chapters[0]?.id;
+---
+
+<BaseLayout title={`${book.title}｜阅读器`} pathname="/">
+  <section>
+    <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap;">
+      <div>
+        <p class="muted" style="margin:0 0 6px;">沉浸阅读器</p>
+        <h1 class="page-title" style="font-size:2.4rem;">{book.title}</h1>
+      </div>
+      <div class="tag-row">
+        <span class="tag">自动本地续读</span>
+        <span class="tag">桌面优先</span>
+        <span class="tag">无登录</span>
+      </div>
+    </div>
+  </section>
+
+  <ReaderClient client:load book={book} chapterId={chapterId} />
+</BaseLayout>

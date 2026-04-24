@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LocalShelfClient from '../components/reader/LocalShelfClient';
+import { getBooks } from '../lib/books';
+
+const validBookIds = (await getBooks()).map((book) => book.id);
+---
+
+<BaseLayout title="本地书架" pathname="/shelf">
+  <section>
+    <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:18px; flex-wrap:wrap;">
+      <div>
+        <h1 class="page-title" style="font-size:2rem;">本地书架</h1>
+        <p class="muted" style="margin:8px 0 0;">最近阅读与收藏</p>
+      </div>
+      <a class="secondary-btn" href="/">返回书库</a>
+    </div>
+  </section>
+
+  <LocalShelfClient client:load validBookIds={validBookIds} />
+</BaseLayout>

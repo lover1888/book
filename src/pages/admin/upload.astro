@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EpubUploadForm from '../../components/admin/EpubUploadForm';
+import { runtimeMode } from '../../lib/runtime-mode';
+
+const mode = runtimeMode;
+---
+
+<BaseLayout title="运营上传页" pathname="/admin/upload">
+  <section>
+    <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:18px; flex-wrap:wrap;">
+      <div>
+        <h1 class="page-title" style="font-size:2rem;">上传 EPUB</h1>
+        <p class="muted" style="margin:8px 0 0;">选择文件并校验</p>
+      </div>
+      <div class="code-block" style="padding:10px 14px;">public/uploads/raw/&lt;yyyy-mm-dd&gt;/&lt;filename&gt;.epub</div>
+    </div>
+    <EpubUploadForm client:load mode={mode} />
+  </section>
+</BaseLayout>

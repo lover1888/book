@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/common/BookCard.astro';
+import { getBooks } from '../lib/books';
+
+const books = await getBooks();
+---
+
+<BaseLayout title="云上阅读｜发现" pathname="/">
+  <section>
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
+        <h1 class="page-title" style="font-size:1.6rem;">书库</h1>
+        <p class="muted" style="margin:0;">共 {books.length} 本</p>
+      </div>
+      <a class="muted" href="/shelf" style="padding:6px 0;">本地书架</a>
+    </div>
+    <div class="grid-3">
+      {books.map((book) => <BookCard book={book} />)}
+    </div>
+  </section>
+</BaseLayout>

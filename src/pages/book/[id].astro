@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getBook } from '../../lib/books';
+
+const book = await getBook(Astro.params.id ?? '');
+if (!book) {
+  return Astro.redirect('/');
+}
+---
+
+<BaseLayout title={`${book.title}｜书籍详情`} pathname="/">
+  <section class="hero">
+    <div class="detail-cover" style="max-width:340px; justify-self:center;">
+      <img src={book.cover} alt={`${book.title} 封面`} />
+    </div>
+    <div style="display:grid; gap:18px; align-content:center;">
+      <div>
+        <p class="pill" style="width:max-content;">{book.category}</p>
+        <h1 style="margin-top:14px;">{book.title}</h1>
+        <p class="muted" style="font-size:1.1rem; margin:12px 0 0;">{book.author}</p>
+      </div>
+      <p class="muted" style="margin:0; line-height:1.9;">{book.description}</p>
+      <div class="metric-grid">
+        <div class="metric-card"><div class="muted">章节数</div><div style="margin-top:8px; font-size:1.4rem; font-weight:700;">{book.chapters.length}</div></div>
+        <div class="metric-card"><div class="muted">字数</div><div style="margin-top:8px; font-size:1.4rem; font-weight:700;">{book.wordCount.toLocaleString()}</div></div>
+        <div class="metric-card"><div class="muted">更新</div><div style="margin-top:8px; font-size:1.4rem; font-weight:700;">{book.lastUpdated}</div></div>
+      </div>
+      <div class="tag-row">
+        {book.tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+      <div class="action-row">
+        <a class="primary-btn" href={`/read/${book.id}`}>开始阅读</a>
+        <a class="secondary-btn" href="/shelf">去本地书架</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section panel">
+    <h3>目录</h3>
+    <div class="setting-grid" style="margin-top:12px;">
+      {book.chapters.map((chapter, index) => (
+        <a class="chapter-link" href={`/read/${book.id}?chapter=${chapter.id}`}>
+          <strong style="display:block; margin-bottom:4px;">第 {index + 1} 章 · {chapter.title}</strong>
+          <span class="muted">{chapter.excerpt}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
